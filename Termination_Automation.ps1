@@ -1,7 +1,7 @@
 ﻿#--------------------------------------------Disable AD and Email Accounts------------------------------------------------#
 #module installs
 Install-Module -Name MSOnline
-Install-Module AzureADPreview
+Install-Module -Name AzureADPreview
 
 do{ 
 $userName = @()
