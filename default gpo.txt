@@ -1,5 +1,0 @@
-RD /S /Q "C:\Windows\System32\GroupPolicy"
-
-RD /S /Q "C:\Windows\System32\GroupPolicyUsers"
-
-gpupdate /force
