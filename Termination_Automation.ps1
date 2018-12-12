@@ -1,20 +1,25 @@
 ﻿#--------------------------------------------Disable AD and Email Accounts------------------------------------------------#
 #install azure AD module
-Install-Module -Name AzureAD
+Install-Module -Name AzureADPreview
+Install-Module -Name MSOnline
 
 do{ 
 $userName = @()
 $email = @()
 $delegateName = @()
+$UserCredential = @()
+$Session = @()
+$sessionrestart = @()
 
     #Gather username, required input and must not be empty or null
     $userName = (Read-Host -Prompt 'Please input the users User Name.')
 
         #Gather Email, required input and must not be empty or null
         $email = (Read-host -Prompt 'Please enter the users email address, with the domain.')
+  
+  	    #Gather Delegate Email, required input and must not be empty or null
+            $delegateName = (Read-host -Prompt 'Please enter in the email of the person who needs delegate and forward access.')
 
-            #Gather Delegate Email, required input and must not be empty or null
-            $delegateName = (Read-host -Prompt 'Please enter in the email of the person who needs delegate access.')
 
 #####################################Connect to Office 365, office 365 msol service,  and enter in office 365 credentials######################################
       
@@ -28,7 +33,7 @@ $UserCredential = Get-Credential
         Import-PSSession $Session
 
             #Starts MSOL Session with same credentials as the O365 powershell script above. This will be needed when we implement the password-reset api         
-	         Connect-MsolService -Credential $Session      
+	    Connect-MsolService -Credential $UserCredential    
 
                 #Convert Email address to shared mailbox and remove license
                 Set-Mailbox -Identity $email -Type Shared
@@ -58,7 +63,7 @@ $UserCredential = Get-Credential
 
 ###########################################Disconnect from Office 365########################################################################################################
 
-#Disable the User Account
+#Disable the User Active Directory Account
 #Disable-ADAccount -Identity $userName
 
 
