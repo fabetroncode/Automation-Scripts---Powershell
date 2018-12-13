@@ -45,7 +45,7 @@ $UserCredential = Get-Credential
                             Set-Mailbox -Identity $email -ForwardingSMTPAddress $delegateName
 
                                 #Block access to terminated email account
-                                Set-MsolUser -UserPrincipalName $email -BlockCredential $true    
+                                Set-Mailbox $email -AccountDisabled:$true    
 
                                     #prove account is blocked
                                     Get-MsolUser -UserPrincipalName $email | Select DisplayName,BlockCredential
