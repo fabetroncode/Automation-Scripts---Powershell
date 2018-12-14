@@ -69,11 +69,9 @@ $UserCredential = Get-Credential
                                                     #Disable the User Account
                                                     Disable-ADAccount -Identity $userName
                                         
-                                                    #restart script check
-                                                    $sessionrestart = (Read-Host -prompt "Do you want to start over? Y or N.")
-            } 
-    
-        while($sessionrestart -eq "Y") {
+                                                        #restart script check
+                                                        $sessionrestart = (Read-Host -prompt "Do you want to start over? Y or N.")
+                } while($sessionrestart -eq "Y") {
 
     }
 
