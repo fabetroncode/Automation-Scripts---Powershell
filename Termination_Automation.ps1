@@ -1,4 +1,17 @@
-﻿#--------------------------------------------Disable AD and Email Accounts------------------------------------------------#
+﻿#Author: MFaber
+#12.14.2018
+#this script does the following: 
+#gathers the username, email, the delegate email, and installs the modules to powershell
+#connects to office 365 and msol
+#convert email address to shared mailbox
+#delegates terminated mailbox to the delegate name
+#blocks sign on to the shared mailbox
+#removes connection to msol and office 365 online
+#disables acccount
+
+
+
+#--------------------------------------------Disable AD and Email Accounts------------------------------------------------#
 #module installs
 Install-Module -Name MSOnline
 Install-Module -Name AzureADPreview
@@ -48,16 +61,13 @@ $UserCredential = Get-Credential
                                 Set-Mailbox $email -AccountDisabled:$true    
 
                                     #prove account is blocked
-                                    Get-MsolUser -UserPrincipalName $email | Select DisplayName,BlockCredential
-
-                                        #remove licenses from account
-                                        (get-MsolUser -UserPrincipalName $email).licenses.AccountSkuId |
-                                           foreach {
-                                              Set-MsolUserLicense -UserPrincipalName $email -RemoveLicenses $_
-                                                   } 
+                                    Get-MsolUser -UserPrincipalName "$($email)" | Select DisplayName,BlockCredential
 
                                                 #disables PSsession 
                                                 Remove-PSSession $Session
+                                                    
+                                                    #Disable the User Account
+                                                    Disable-ADAccount -Identity $userName
                                         
                                                     #restart script check
                                                     $sessionrestart = (Read-Host -prompt "Do you want to start over? Y or N.")
@@ -67,10 +77,6 @@ $UserCredential = Get-Credential
 
     }
 
-###########################################Disconnect from Office 365########################################################################################################
-
-#Disable the User Account
-#Disable-ADAccount -Identity $userName
 
 
 
