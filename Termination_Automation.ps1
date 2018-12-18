@@ -63,14 +63,15 @@ $UserCredential = Get-Credential
                                     #prove account is blocked
                                     Get-MsolUser -UserPrincipalName "$($email)" | Select DisplayName,BlockCredential
 
-                                                #disables PSsession 
-                                                Remove-PSSession $Session
+                                        #disables PSsession 
+                                        Remove-PSSession $Session
                                                     
-                                                    #Disable the User Account
-                                                    Disable-ADAccount -Identity $userName
+                                            #Disable the User Account
+                                            Disable-ADAccount -Identity $userName
                                         
-                                                        #restart script check
-                                                        $sessionrestart = (Read-Host -prompt "Do you want to start over? Y or N.")
+                                                #restart script check
+                                                $sessionrestart = (Read-Host -prompt "Do you want to start over? Y or N.")
+
                 } while($sessionrestart -eq "Y") {
 
     }
